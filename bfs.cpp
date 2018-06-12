@@ -2,64 +2,62 @@
 
 #include <iostream>
 #include <list>
-#include <queue> // fila para usar na BFS
-
+#include <queue>
 using namespace std;
 
 class Grafo
 {
-	int V; // número de vértices
-	list<int> *adj; // ponteiro para um array contendo as listas de adjacências
+	int V;
+	list<int> *adj;
 
-public:
-	Grafo(int V); // construtor
-	void addAresta(int v1, int v2); // adiciona uma aresta no grafo
+  public:
+	Grafo(int V);
+	void addAresta(int v1, int v2);
 
-	// faz uma BFS a partir de um vértice
-	void bfs(int v);
+	
+		void bfs(int v);
 };
 
 Grafo::Grafo(int V)
 {
-	this->V = V; // atribui o número de vértices
-	adj = new list<int>[V]; // cria as listas
+	this->V = V;
+	adj = new list<int>[V];
 }
 
 void Grafo::addAresta(int v1, int v2)
 {
-	// adiciona vértice v2 à lista de vértices adjacentes de v1
+
 	adj[v1].push_back(v2);
 }
 
 void Grafo::bfs(int v)
 {
 	queue<int> fila;
-	bool visitados[V]; // vetor de visitados
+	bool vetoresVisirados[V];
 
-	for(int i = 0; i < V; i++)
-		visitados[i] = false;
+	for (int i = 0; i < V; i++)
+		vetoresVisirados[i] = false;
 
 	cout << "Visitando vertice " << v << " ...\n";
-	visitados[v] = true; // marca como visitado
+	vetoresVisirados[v] = true;
 
-	while(true)
+	while (true)
 	{
 		list<int>::iterator it;
-		for(it = adj[v].begin(); it != adj[v].end(); it++)
+		for (it = adj[v].begin(); it != adj[v].end(); it++)
 		{
-			if(!visitados[*it])
+			if (!vetoresVisirados[*it])
 			{
 				cout << "Visitando vertice " << *it << " ...\n";
-				visitados[*it] = true; // marca como visitado
-				fila.push(*it); // insere na fila
+				vetoresVisirados[*it] = true;
+				fila.push(*it);
 			}
 		}
 
-		// verifica se a fila NÃO está vazia
-		if(!fila.empty())
+		if (!fila.empty())
 		{
-			v = fila.front(); // obtém o primeiro elemento
-			fila.pop(); // remove da fila
+			v = fila.front();
+			fila.pop();
 		}
 		else
 			break;

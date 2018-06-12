@@ -5,40 +5,40 @@
 
 #define FLSH gets(l)
 
-int d, o, v = 0;
+int d, o, vert = 0;
 int custo, *c = NULL;
 
-void dijkstra(int v,int o,int d,int *c)
+void dijkstra(int vert,int o,int d,int *c)
 {
-    int i,v, cont = 0;
+    int i, v, cont = 0;
     int *ant, *tmp;
-    int *z;     /* v para os quais se conhece o caminho minimo */
+    int *z;
     double min;
-    double dist[v]; /* vetor com os c dos caminhos */
+    double dist[vert];
 
 
-    /* aloca as linhas da matriz */
-    ant = (int *)calloc (v, sizeof(int));
-    tmp = (int *)calloc (v, sizeof(int));
+    
+    ant = (int *)calloc (vert, sizeof(int));
+    tmp = (int *)calloc (vert, sizeof(int));
     if (ant == NULL)
     {
         printf ("** Erro: Memoria Insuficiente **");
         exit(-1);
     }
 
-    z = (int *)calloc (v, sizeof(int));
+    z = (int *)calloc (vert, sizeof(int));
     if (z == NULL)
     {
         printf ("** Erro: Memoria Insuficiente **");
         exit(-1);
     }
 
-    for (i = 0; i < v; i++)
+    for (i = 0; i < vert; i++)
     {
-        if (c[(o - 1) * v + i] !=- 1)
+        if (c[(o - 1) * vert + i] !=- 1)
         {
             ant[i] = o - 1;
-            dist[i] = c[(o-1)*v+i];
+            dist[i] = c[(o-1)*vert+i];
         }
         else
         {
@@ -50,13 +50,13 @@ void dijkstra(int v,int o,int d,int *c)
     z[o-1] = 1;
     dist[o-1] = 0;
 
-    /* Laco principal */
+    
     do
     {
 
-        /* Encontrando o vertice que deve entrar em z */
+        
         min = HUGE_VAL;
-        for (i=0; i<v; i++)
+        for (i=0; i<vert; i++)
             if (!z[i])
                 if (dist[i]>=0 && dist[i]<min)
                 {
@@ -64,16 +64,16 @@ void dijkstra(int v,int o,int d,int *c)
                     v=i;
                 }
 
-        /* Calculando as distancias dos novos vizinhos de z */
+        
         if (min != HUGE_VAL && v != d - 1)
         {
             z[v] = 1;
-            for (i = 0; i < v; i++)
+            for (i = 0; i < vert; i++)
                 if (!z[i])
                 {
-                    if (c[v*v+i] != -1 && dist[v] + c[v*v+i] < dist[i])
+                    if (c[v*vert+i] != -1 && dist[v] + c[v*vert+i] < dist[i])
                     {
-                        dist[i] = dist[v] + c[v*v+i];
+                        dist[i] = dist[v] + c[v*vert+i];
                         ant[i] =v;
                     }
                 }
@@ -81,7 +81,7 @@ void dijkstra(int v,int o,int d,int *c)
     }
     while (v != d - 1 && min != HUGE_VAL);
 
-    /* Mostra o Resultado da busca */
+    
     printf("\tDe %d para %d: \t", o, d);
     if (min == HUGE_VAL)
     {
@@ -94,7 +94,7 @@ void dijkstra(int v,int o,int d,int *c)
         i = ant[i-1];
         while (i != -1)
         {
-            //   printf("<-%d",i+1);
+            
             tmp[cont] = i+1;
             cont++;
             i = ant[i];
@@ -132,15 +132,15 @@ void add(void)
 
     do
     {
-        printf("\nInforme o numero de v (no minimo 2 ): ");
-        scanf("%d",&v);
+        printf("\nInforme o numero de vert (no minimo 2 ): ");
+        scanf("%d",&vert);
     }
-    while (v < 2 );
+    while (vert < 2 );
 
     if (!c)
         free(c);
-    c = (int *) malloc(sizeof(int)*v*v);
-    for (i = 0; i <= v * v; i++)
+    c = (int *) malloc(sizeof(int)*vert*vert);
+    for (i = 0; i <= vert * vert; i++)
         c[i] = -1;
 
     printf("Entre com as Arestas:\n");
@@ -148,19 +148,19 @@ void add(void)
     {
         do
         {
-            printf("o da aresta (entre 1 e %d ou '0' para sair): ", v);
+            printf("o da aresta (entre 1 e %d ou '0' para sair): ", vert);
             scanf("%d",&o);
         }
-        while (o < 0 || o > v);
+        while (o < 0 || o > vert);
 
         if (o)
         {
             do
             {
-                printf("D da aresta (entre 1 e %d, menos %d): ", v, o);
+                printf("d da aresta (entre 1 e %d, menos %d): ", vert, o);
                 scanf("%d", &d);
             }
-            while (d < 1 || d > v || d == o);
+            while (d < 1 || d > vert || d == o);
 
             do
             {
@@ -170,7 +170,7 @@ void add(void)
             }
             while (custo < 0);
 
-            c[(o-1) * v + d - 1] = custo;
+            c[(o-1) * vert + d - 1] = custo;
         }
 
     }
@@ -185,10 +185,10 @@ void procurar(void)
   
     printf("Lista dos Menores Caminhos no Grafo Dado: \n");
 
-    for (i = 1; i <= v; i++)
+    for (i = 1; i <= vert; i++)
     {
-        for (j = 1; j <= v; j++)
-            dijkstra(v, i,j, c);
+        for (j = 1; j <= vert; j++)
+            dijkstra(vert, i,j, c);
         printf("\n");
     }
 
@@ -214,7 +214,7 @@ int main(int argc, char **argv)
         }
         FLSH;
 
-        if ((strcmp(opcao, "r") == 0) && (v > 0) )
+        if ((strcmp(opcao, "r") == 0) && (vert > 0) )
         {
             procurar();
             FLSH;

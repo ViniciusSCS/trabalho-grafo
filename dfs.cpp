@@ -1,91 +1,86 @@
 // Grafos - DFS (busca em profundidade)
- 
+
 #include <iostream>
 #include <list>
-#include <algorithm> // função find
-#include <stack> // pilha para usar na DFS
- 
+#include <algorithm>
+#include <stack>
+
 using namespace std;
- 
+
 class Grafo
 {
-	int V; // número de vértices
-	list<int> *adj; // ponteiro para um array contendo as listas de adjacências
- 
-public:
-	Grafo(int V); // construtor
-	void addAresta(int v1, int v2); // adiciona uma aresta no grafo
- 
-	// faz uma DFS a partir de um vértice
+	int V;
+	list<int> *adj;
+
+  public:
+	Grafo(int V);
+	void addAresta(int v1, int v2);
+
 	void dfs(int v);
 };
- 
+
 Grafo::Grafo(int V)
 {
-	this->V = V; // atribui o número de vértices
-	adj = new list<int>[V]; // cria as listas
+	this->V = V;
+	adj = new list<int>[V];
 }
- 
+
 void Grafo::addAresta(int v1, int v2)
 {
-	// adiciona vértice v2 à lista de vértices adjacentes de v1
+
 	adj[v1].push_back(v2);
 }
- 
+
 void Grafo::dfs(int v)
 {
 	stack<int> pilha;
-	bool visitados[V]; // vetor de visitados
- 
-	// marca todos como não visitados
-	for(int i = 0; i < V; i++)
-		visitados[i] = false;
- 
-	while(true)
+	bool vetorVisitado[V];
+
+	for (int i = 0; i < V; i++)
+		vetorVisitado[i] = false;
+
+	while (true)
 	{
-		if(!visitados[v])
+		if (!vetorVisitado[v])
 		{
 			cout << "Visitando vertice " << v << " ...\n";
-			visitados[v] = true; // marca como visitado
-			pilha.push(v); // insere "v" na pilha
+			vetorVisitado[v] = true;
+			pilha.push(v);
 		}
- 
+
 		bool a = false;
 		list<int>::iterator it;
- 
-		// busca por um vizinho não visitado
-		for(it = adj[v].begin(); it != adj[v].end(); it++)
+
+		for (it = adj[v].begin(); it != adj[v].end(); it++)
 		{
-			if(!visitados[*it])
+			if (!vetorVisitado[*it])
 			{
 				a = true;
 				break;
 			}
 		}
- 
-		if(a)
-			v = *it; // atualiza o "v"
+
+		if (a)
+			v = *it;
 		else
 		{
-			// se todos os vizinhos estão visitados ou não existem vizinhos
-			// remove da pilha
+
 			pilha.pop();
-			// se a pilha ficar vazia, então terminou a busca
-			if(pilha.empty())
+
+			if (pilha.empty())
 				break;
-			// se chegou aqui, é porque pode pegar elemento do topo
+
 			v = pilha.top();
 		}
 	}
 }
- 
+
 int main()
 {
 	int V = 8;
- 
+
 	Grafo grafo(V);
- 
-	// adicionando as arestas
+
 	grafo.addAresta(0, 1);
 	grafo.addAresta(0, 2);
 	grafo.addAresta(1, 3);
@@ -93,8 +88,8 @@ int main()
 	grafo.addAresta(2, 5);
 	grafo.addAresta(2, 6);
 	grafo.addAresta(6, 7);
-	
+
 	grafo.dfs(0);
- 
+
 	return 0;
 }
