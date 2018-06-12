@@ -25,7 +25,7 @@ struct Graph
 	}
 
 	
-	int kruskalMST();
+	int kruskal();
 };
 
 
@@ -79,7 +79,7 @@ struct DisjointSets
 
 
 
-int Graph::kruskalMST()
+int Graph::kruskal()
 {
 	int mst_wt = 0; 
 
@@ -138,7 +138,7 @@ int main()
 	g.addEdge(7, 8, 7);
 
 	cout << "Bordas do MST \n";
-	int mst_wt = g.kruskalMST();
+	int mst_wt = g.kruskal();
 
 	cout << "\nO peso do MST:" << mst_wt;
 

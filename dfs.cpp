@@ -14,7 +14,7 @@ class Grafo
  
 public:
 	Grafo(int V); // construtor
-	void adicionarAresta(int v1, int v2); // adiciona uma aresta no grafo
+	void addAresta(int v1, int v2); // adiciona uma aresta no grafo
  
 	// faz uma DFS a partir de um vértice
 	void dfs(int v);
@@ -26,7 +26,7 @@ Grafo::Grafo(int V)
 	adj = new list<int>[V]; // cria as listas
 }
  
-void Grafo::adicionarAresta(int v1, int v2)
+void Grafo::addAresta(int v1, int v2)
 {
 	// adiciona vértice v2 à lista de vértices adjacentes de v1
 	adj[v1].push_back(v2);
@@ -86,13 +86,13 @@ int main()
 	Grafo grafo(V);
  
 	// adicionando as arestas
-	grafo.adicionarAresta(0, 1);
-	grafo.adicionarAresta(0, 2);
-	grafo.adicionarAresta(1, 3);
-	grafo.adicionarAresta(1, 4);
-	grafo.adicionarAresta(2, 5);
-	grafo.adicionarAresta(2, 6);
-	grafo.adicionarAresta(6, 7);
+	grafo.addAresta(0, 1);
+	grafo.addAresta(0, 2);
+	grafo.addAresta(1, 3);
+	grafo.addAresta(1, 4);
+	grafo.addAresta(2, 5);
+	grafo.addAresta(2, 6);
+	grafo.addAresta(6, 7);
 	
 	grafo.dfs(0);
  
