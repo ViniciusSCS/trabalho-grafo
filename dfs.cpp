@@ -50,7 +50,7 @@ void Grafo::dfs(int v)
 			pilha.push(v); // insere "v" na pilha
 		}
  
-		bool achou = false;
+		bool a = false;
 		list<int>::iterator it;
  
 		// busca por um vizinho não visitado
@@ -58,12 +58,12 @@ void Grafo::dfs(int v)
 		{
 			if(!visitados[*it])
 			{
-				achou = true;
+				a = true;
 				break;
 			}
 		}
  
-		if(achou)
+		if(a)
 			v = *it; // atualiza o "v"
 		else
 		{
